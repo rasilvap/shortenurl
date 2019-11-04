@@ -34,7 +34,7 @@ public class ShortenUrlController {
 	}
 	
 	@GetMapping(URL_PATH)
-	public CompletableFuture<String> redirectUrl(@PathVariable String id) throws Exception {
+	public CompletableFuture<String> retrieveOriginalUrl(@PathVariable String id) throws Exception {
 		LOGGER.info("short url to redirect: " + id);
 		CompletableFuture<String> redirectUrlString = urlConverterService.getLongURLFromID(id);
 		LOGGER.info("Original URL: " + redirectUrlString);
