@@ -13,7 +13,7 @@ public class ShortURLRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortURLRepository.class);
     
     public ShortURLRepository() {
-        this.jedis = new Jedis();
+        this.jedis = new Jedis("redis", 6379);
         this.idKey = "id";
         this.urlKey = "url:";
     }
