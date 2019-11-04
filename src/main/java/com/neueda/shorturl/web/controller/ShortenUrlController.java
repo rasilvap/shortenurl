@@ -1,6 +1,6 @@
-package com.neueda.shorturl.controller;
+package com.neueda.shorturl.web.controller;
 
-import com.neueda.shorturl.service.URLConverterService;
+import com.neueda.shorturl.service.ShortURLService;
 import com.neueda.shorturl.service.dto.ShortenUrlDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +16,10 @@ public class ShortenUrlController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShortenUrlController.class);
 	public static final String SHORTEN_URL_PATH = "/shorten";
 	public static final String URL_PATH = "/{id}";
-	private final URLConverterService urlConverterService;
+	private final ShortURLService shortUrlService;
 	
-	public ShortenUrlController(URLConverterService urlConverterService) {
-		this.urlConverterService = urlConverterService;
+	public ShortenUrlController(ShortURLService shortUrlService) {
+		this.shortUrlService = shortUrlService;
 	}
 	
 	@PostMapping(SHORTEN_URL_PATH)
@@ -28,7 +28,7 @@ public class ShortenUrlController {
 		LOGGER.info("Url to shorten: " + shortenUrlDto.getUrl());
 		CompletableFuture<String> shortenedUrl = null;
 		String localURL = request.getRequestURL().toString();
-		shortenedUrl = urlConverterService.shortenURL(localURL, shortenUrlDto.getUrl());
+		shortenedUrl = shortUrlService.shortenURL(localURL, shortenUrlDto.getUrl());
 		LOGGER.info("Shortened url to: " + shortenedUrl);
 		return shortenedUrl;
 	}
@@ -36,7 +36,7 @@ public class ShortenUrlController {
 	@GetMapping(URL_PATH)
 	public CompletableFuture<String> retrieveOriginalUrl(@PathVariable String id) throws Exception {
 		LOGGER.info("short url to redirect: " + id);
-		CompletableFuture<String> redirectUrlString = urlConverterService.getLongURLFromID(id);
+		CompletableFuture<String> redirectUrlString = shortUrlService.getLongURLFromID(id);
 		LOGGER.info("Original URL: " + redirectUrlString);
 		return redirectUrlString;
 	}

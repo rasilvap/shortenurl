@@ -1,8 +1,7 @@
-package com.neueda.shortenurl.repository;
+package com.neueda.shorturl.repository;
 
 import ai.grakn.redismock.RedisServer;
 import com.neueda.shorturl.exception.URLNotFoundException;
-import com.neueda.shorturl.repository.ShortURLRepository;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -15,8 +14,10 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
-public class URLRepositoryTest {
+public class ShortURLRepositoryTest {
+    
     public static final String ID_KEY = "id";
     public static final String URL_KEY = "url:";
     private RedisServer server;
@@ -52,13 +53,15 @@ public class URLRepositoryTest {
         ShortURLRepository urlRepository = new ShortURLRepository(mockJedis, ID_KEY, URL_KEY);
         String actuaUrl = urlRepository.getUrl(Long.valueOf(RandomStringUtils.randomNumeric(3)));
         assertEquals(expectedUrl, actuaUrl);
+        then(mockJedis).should().hget(anyString(), anyString());
     }
     
     @Test(expected = URLNotFoundException.class)
-    public void getUrl_doesNotExist__throwException() throws Exception {
+    public void getUrl_doesNotExist_throwException() throws Exception {
         mockJedis = Mockito.mock(Jedis.class);
         given(mockJedis.hget(anyString(), anyString())).willReturn(null);
         ShortURLRepository urlRepository = new ShortURLRepository(mockJedis, ID_KEY, URL_KEY);
         urlRepository.getUrl(Long.valueOf(RandomStringUtils.randomNumeric(3)));
+        then(mockJedis).should().hget(anyString(), anyString());
     }
 }

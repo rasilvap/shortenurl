@@ -13,12 +13,13 @@ import java.util.concurrent.CompletableFuture;
 
 
 @Service
-public class URLConverterService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(URLConverterService.class);
+public class ShortURLService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShortURLService.class);
+    public static final String URL_KEY = "url:";
     private final ShortURLRepository shortUrlRepository;
     
     @Autowired
-    public URLConverterService(ShortURLRepository shortUrlRepository) {
+    public ShortURLService(ShortURLRepository shortUrlRepository) {
         this.shortUrlRepository = shortUrlRepository;
     }
     
@@ -27,13 +28,13 @@ public class URLConverterService {
             throw new InvalidUrlException();
         }
         LOGGER.info("Shortening {}", longUrl);
-        Long id = shortUrlRepository.incrementID();
-        String uniqueID = URLIDUtils.INSTANCE.createUniqueID(id);
-        shortUrlRepository.saveUrl("url:"+id, longUrl);
+        Long id = getShotenId();
+        shortUrlRepository.saveUrl(URL_KEY + id, longUrl);
         String baseString = formatLocalURLFromShortener(localURL);
-        String shortenedURL = baseString + uniqueID;
+        String shortenedURL = baseString + URLIDUtils.INSTANCE.createUniqueID(id);;
         return CompletableFuture.completedFuture(shortenedURL);
     }
+    
     
     public CompletableFuture<String> getLongURLFromID(String uniqueID) throws Exception {
         Long dictionaryKey = URLIDUtils.INSTANCE.getDictionaryKeyFromUniqueID(uniqueID);
@@ -42,9 +43,12 @@ public class URLConverterService {
         return CompletableFuture.completedFuture(longUrl);
     }
     
+    private Long getShotenId() {
+        return shortUrlRepository.incrementID();
+    }
+    
     private String formatLocalURLFromShortener(String localURL) {
         String[] addressComponents = localURL.split("/");
-        // remove the endpoint (last index)
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < addressComponents.length - 1; ++i) {
             sb.append(addressComponents[i]);
