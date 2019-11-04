@@ -1,5 +1,6 @@
 package com.neueda.shortenurl.repository;
 
+import com.neueda.shorturl.repository.ShortURLRepository;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 public class URLRepositoryTest {
-    /*private static RedisServer server;
+    private static RedisServer server;
     @BeforeClass public static void setupServer() throws IOException {
         server = RedisServer.newServerFrom(6789);
         server.start();
@@ -29,5 +30,5 @@ public class URLRepositoryTest {
             long actualId = urlRepository.incrementID();
             assertEquals(expectedId, actualId);
         }
-    }*/
+    }
 }

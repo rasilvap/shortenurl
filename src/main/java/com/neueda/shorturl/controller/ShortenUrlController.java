@@ -40,10 +40,5 @@ public class ShortenUrlController {
 		LOGGER.info("Original URL: " + redirectUrlString);
 		return redirectUrlString;
 	}
-	
-	@GetMapping("/name")
-	public String getMyName() {
-		return "Simple Spring Boot Application";
-	}
 }
 
