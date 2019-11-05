@@ -2,6 +2,8 @@
 
 ## A Dockerized Spring Boot Service with usinf Redis as Storage.
 
+This app uses redis  due to the ability to be used as an in-memory data structure. Futhermore the Dictionary functionality we require can be obtained from Redis’ hset.
+
 ### Utils
 
 #### IDUtils
@@ -43,7 +45,7 @@ This app is builded using maven and docker, make sure that you have installed th
 
 By default the Server will run on localhost:8080/shorten
 
-To test, send POST Request to localhost:8080/shorten with a body of type application/json with body. You can use postman to make this petition, for example:
+To test, send POST Request to localhost:8080/shorten with a body of type application/json with body. You can use postman to make this petition, for example, you can use the next BodyRequest:
 
 {
   "url" : "https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/"
