@@ -31,5 +31,33 @@ The Controller responsible for interact with the users petitions with the next r
 1. Serving an endpoint to shorten URL
 2. Redirect shortened URL to the original URL
 
+## How to run.
+
+This app is builded using maven and docker, make sure that you have installed this tools. The process to run the application is pretty simple, please run the next commands:
+
+1. Clone the repo in your local machine with git: git clone https://github.com/rasilvap/shortenurl.git
+2. Move to the root of the proyect /shortenurl.
+3.mvn clean install
+4.docker build -f Dockerfile -t shortenurl .
+5.docker-compose up
+
+By default the Server will run on localhost:8080/shorten
+
+To test, send POST Request to localhost:8080/shorten with a body of type application/json with body. You can use postman to make this petition, for example:
+
+{
+  "url" : "https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/"
+}
+
+This request is going to give you, the next response:
+
+http:localhost:8080/v
+
+If you use the get request with this shortenurl, you are going to have the original url.
+
+
+
+
+
 
 
