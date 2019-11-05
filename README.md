@@ -37,9 +37,9 @@ This app is builded using maven and docker, make sure that you have installed th
 
 1. Clone the repo in your local machine with git: git clone https://github.com/rasilvap/shortenurl.git
 2. Move to the root of the proyect /shortenurl.
-3.mvn clean install
-4.docker build -f Dockerfile -t shortenurl .
-5.docker-compose up
+3. mvn clean install
+4. docker build -f Dockerfile -t shortenurl .
+5. docker-compose up
 
 By default the Server will run on localhost:8080/shorten
 
