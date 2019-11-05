@@ -29,17 +29,32 @@ public class ShortURLRepository {
         this.urlKey = urlKey;
     }
     
+    /**
+     * This method find in the redis storage and generates a new unique ID for each new url.
+     * @return next uniqueID per each url
+     */
     public Long incrementID() {
         Long id = jedis.incr(idKey);
         LOGGER.info("Incrementing ID: {}", id - 1);
         return id - 1;
     }
     
+    /**
+     *
+     * @param key the unique identifier of the shorten url.
+     * @param longUrl the original url
+     */
     public void saveUrl(String key, String longUrl) {
         LOGGER.info("Saving: {} at {}", longUrl, key);
         jedis.hset(urlKey, key, longUrl);
     }
     
+    /**
+     *
+     * @param id the id associated with the original url and the shorten version.
+     * @return the original url.
+     * @throws Exception if the url is not found.
+     */
     public String getUrl(Long id) throws Exception {
         LOGGER.info("Retrieving at {}", id);
         String url = jedis.hget(urlKey, "url:" + id);

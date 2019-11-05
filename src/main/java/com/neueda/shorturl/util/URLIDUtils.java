@@ -16,6 +16,9 @@ public class URLIDUtils {
     private static HashMap<Character, Integer> charToIndexTable;
     private static List<Character> indexToCharTable;
     
+    /**
+     * Represents the chart displayed of converting shortened URL back to a Dictionary key.
+     */
     private void initializeCharToIndexTable() {
         charToIndexTable = new HashMap<>();
         // 0->a, 1->b, ..., 25->z, ..., 52->0, 61->9
@@ -36,6 +39,9 @@ public class URLIDUtils {
         }
     }
     
+    /**
+     * Represents the conversion chart in the base10 to base62
+     */
     private void initializeIndexToCharTable() {
         // 0->a, 1->b, ..., 25->z, ..., 52->0, 61->9
         indexToCharTable = new ArrayList<>();
@@ -56,6 +62,11 @@ public class URLIDUtils {
         }
     }
     
+    /**
+     * Takes in an id (base10) and converts it into base62
+     * @param id The url id which will be converted to base62.
+     * @return The id in base62 format.
+     */
     public static String createUniqueID(Long id) {
         List<Integer> base62ID = convertBase10ToBase62ID(id);
         StringBuilder uniqueURLID = new StringBuilder();
@@ -65,6 +76,11 @@ public class URLIDUtils {
         return uniqueURLID.toString();
     }
     
+    /**
+     * Convert base10 to base62 version.
+     * @param id The url id which will be converted to base62.
+     * @return The id in base62 format.
+     */
     private static List<Integer> convertBase10ToBase62ID(Long id) {
         List<Integer> digits = new LinkedList<>();
         while (id > 0) {
@@ -75,6 +91,11 @@ public class URLIDUtils {
         return digits;
     }
     
+    /**
+     * Takes the unique URL ID and converts it back into its base62 number counterparts.
+     * @param uniqueID the input unique id to be processed.
+     * @return the base62 id to base10 version.
+     */
     public static Long getDictionaryKeyFromUniqueID(String uniqueID) {
         List<Character> base62IDs = new ArrayList<>();
         for (int i = 0; i < uniqueID.length(); ++i) {
@@ -84,6 +105,11 @@ public class URLIDUtils {
         return dictionaryKey;
     }
     
+    /**
+     * Convert the base62 url to base10 version.
+     * @param ids
+     * @return
+     */
     private static Long convertBase62ToBase10ID(List<Character> ids) {
         long id = 0L;
         for (int i = 0, exp = ids.size() - 1; i < ids.size(); ++i, --exp) {

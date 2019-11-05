@@ -12,6 +12,11 @@ public class URLValidator {
     private URLValidator() {
     }
     
+    /**
+     * Validates if the url format is correct.
+     * @param url the original url.
+     * @return true if the url is correct, otherwise false.
+     */
     public boolean validateURL(String url) {
         Matcher m = URL_PATTERN.matcher(url);
         return m.matches();

@@ -23,19 +23,31 @@ public class ShortURLService {
         this.shortUrlRepository = shortUrlRepository;
     }
     
+    /**
+     *
+     * @param localURL is the url associated with the local server.
+     * @param longUrl the original url
+     * @return the shorten url version
+     * @throws Exception if the url format is incorrect.
+     */
     public CompletableFuture<String> shortenURL(String localURL, String longUrl) throws Exception {
         if (!URLValidator.INSTANCE.validateURL(longUrl)) {
             throw new InvalidUrlException();
         }
         LOGGER.info("Shortening {}", longUrl);
-        Long id = getShotenId();
+        Long id = getShortenId();
         shortUrlRepository.saveUrl(URL_KEY + id, longUrl);
         String baseString = formatLocalURLFromShortener(localURL);
         String shortenedURL = baseString + URLIDUtils.INSTANCE.createUniqueID(id);;
         return CompletableFuture.completedFuture(shortenedURL);
     }
     
-    
+    /**
+     *
+     * @param uniqueID the unique identifier per each url.
+     * @return the original url.
+     * @throws Exception if the url is not found.
+     */
     public CompletableFuture<String> getLongURLFromID(String uniqueID) throws Exception {
         Long dictionaryKey = URLIDUtils.INSTANCE.getDictionaryKeyFromUniqueID(uniqueID);
         String longUrl = shortUrlRepository.getUrl(dictionaryKey);
@@ -43,10 +55,19 @@ public class ShortURLService {
         return CompletableFuture.completedFuture(longUrl);
     }
     
-    private Long getShotenId() {
+    /**
+     * Generates a new unique id for each new url.
+     * @return the unique id.
+     */
+    private Long getShortenId() {
         return shortUrlRepository.incrementID();
     }
     
+    /**
+     * Format the local url to adding the shorten url instead of the endpoint.
+     * @param localURL
+     * @return the localUrl which will be append to the shorten one.
+     */
     private String formatLocalURLFromShortener(String localURL) {
         String[] addressComponents = localURL.split("/");
         StringBuilder sb = new StringBuilder();
