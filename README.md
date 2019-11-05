@@ -2,7 +2,7 @@
 
 ## A Dockerized Spring Boot Service with using Redis as Storage.
 
-This app uses redis  due to the ability to be used as an in-memory data structure. Futhermore the Dictionary functionality we require can be obtained from Redis’ hset.
+This app uses redis  due to the ability to be used as an in-memory data structure. Furthermore the Dictionary functionality we require can be obtained from Redis’ hset.
 
 ### Utils
 
