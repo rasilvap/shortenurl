@@ -2,8 +2,8 @@ package com.neueda.shorturl.service;
 
 import com.neueda.shorturl.exception.InvalidUrlException;
 import com.neueda.shorturl.repository.ShortURLRepository;
-import com.neueda.shorturl.util.URLIDUtils;
-import com.neueda.shorturl.util.URLValidator;
+import com.neueda.shorturl.util.IDUtils;
+import com.neueda.shorturl.util.URLValidatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +26,19 @@ public class ShortURLService {
     /**
      *
      * @param localURL is the url associated with the local server.
-     * @param longUrl the original url
-     * @return the shorten url version
+     * @param longUrl the original url.
+     * @return the shorten url version.
      * @throws Exception if the url format is incorrect.
      */
     public CompletableFuture<String> shortenURL(String localURL, String longUrl) throws Exception {
-        if (!URLValidator.INSTANCE.validateURL(longUrl)) {
+        if (!URLValidatorUtils.INSTANCE.validateURL(longUrl)) {
             throw new InvalidUrlException();
         }
         LOGGER.info("Shortening {}", longUrl);
         Long id = getShortenId();
         shortUrlRepository.saveUrl(URL_KEY + id, longUrl);
         String baseString = formatLocalURLFromShortener(localURL);
-        String shortenedURL = baseString + URLIDUtils.INSTANCE.createUniqueID(id);;
+        String shortenedURL = baseString + IDUtils.INSTANCE.createUniqueID(id);;
         return CompletableFuture.completedFuture(shortenedURL);
     }
     
@@ -49,7 +49,7 @@ public class ShortURLService {
      * @throws Exception if the url is not found.
      */
     public CompletableFuture<String> getLongURLFromID(String uniqueID) throws Exception {
-        Long dictionaryKey = URLIDUtils.INSTANCE.getDictionaryKeyFromUniqueID(uniqueID);
+        Long dictionaryKey = IDUtils.INSTANCE.getDictionaryKeyFromUniqueID(uniqueID);
         String longUrl = shortUrlRepository.getUrl(dictionaryKey);
         LOGGER.info("Converting shortened URL back to {}", longUrl);
         return CompletableFuture.completedFuture(longUrl);

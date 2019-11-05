@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class URLIDUtils {
-    public static final URLIDUtils INSTANCE = new URLIDUtils();
+public class IDUtils {
+    public static final IDUtils INSTANCE = new IDUtils();
     
-    private URLIDUtils() {
+    private IDUtils() {
         initializeCharToIndexTable();
         initializeIndexToCharTable();
     }
