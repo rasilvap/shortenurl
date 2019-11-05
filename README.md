@@ -47,13 +47,17 @@ By default the Server will run on localhost:8080/shorten
 
 To test, send POST Request to localhost:8080/shorten with a body of type application/json with body. You can use postman to make this petition, for example, you can use the next BodyRequest:
 
+```
 {
   "url" : "https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/"
 }
+```
 
 This request is going to give you, the next response:
 
+```
 http:localhost:8080/v
+```
 
 If you use the get request with this shortenurl, you are going to have the original url.
 
