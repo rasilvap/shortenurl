@@ -64,7 +64,12 @@ If you use the get request with this shortenurl, you are going to have the origi
 
 ## Tech Design ShortenUrl.
 
-<img src = "src/main/java/com/neueda/shorturl/web/images/TechDesingShortenUrl.png" />
+### shortenURL
+<img src = "src/main/java/com/neueda/shorturl/web/images/shortenURL.png" />
+
+### retrieveOriginalUrl
+
+<img src = "src/main/java/com/neueda/shorturl/web/images/retrieveOriginalURL.png" />
 
 
 
