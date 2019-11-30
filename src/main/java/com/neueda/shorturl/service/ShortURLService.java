@@ -37,8 +37,7 @@ public class ShortURLService {
         LOGGER.info("Shortening {}", longUrl);
         Long id = getShortenId();
         shortUrlRepository.saveUrl(URL_KEY + id, longUrl);
-        String baseString = formatLocalURLFromShortener(localURL);
-        String shortenedURL = baseString + IDUtils.INSTANCE.createUniqueID(id);;
+        String shortenedURL = buildShortenUrl(localURL, id);
         return CompletableFuture.completedFuture(shortenedURL);
     }
     
@@ -49,7 +48,7 @@ public class ShortURLService {
      * @throws Exception if the url is not found.
      */
     public CompletableFuture<String> getLongURLFromID(String uniqueID) throws Exception {
-        Long dictionaryKey = IDUtils.INSTANCE.getDictionaryKeyFromUniqueID(uniqueID);
+        Long dictionaryKey = IDUtils.INSTANCE.getKeyFromUniqueID(uniqueID);
         String longUrl = shortUrlRepository.getUrl(dictionaryKey);
         LOGGER.info("Converting shortened URL back to {}", longUrl);
         return CompletableFuture.completedFuture(longUrl);
@@ -76,5 +75,25 @@ public class ShortURLService {
         }
         sb.append('/');
         return sb.toString();
+    }
+    
+    /**
+     * Build the shortenUrl to be shown in the response.
+     * @param localURL the local host url.
+     * @param id the shortenId incremented By 1.
+     * @return the shortenUrl built (base String + uniqueID)
+     */
+    private String buildShortenUrl(String localURL, Long id) {
+        String baseString = formatLocalURLFromShortener(localURL);
+        return baseString + getUniqueID(id);
+    }
+    
+    /**
+     * Return uniqueId in base62 format..
+     * @param id id from storage.
+     * @return UniqueId in base62 format.
+     */
+    private String getUniqueID(Long id) {
+        return IDUtils.INSTANCE.generateUniqueID(id);
     }
 }

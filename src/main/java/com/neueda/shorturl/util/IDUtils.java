@@ -8,9 +8,9 @@ import java.util.List;
 public class IDUtils {
     public static final IDUtils INSTANCE = new IDUtils();
     
-    private IDUtils() {
-        initializeCharToIndexTable();
-        initializeIndexToCharTable();
+    public IDUtils() {
+        charToIndexTable = initializeCharToIndexTable();
+        indexToCharTable = initializeIndexToCharTable();
     }
     
     private static HashMap<Character, Integer> charToIndexTable;
@@ -19,7 +19,7 @@ public class IDUtils {
     /**
      * Represents the chart displayed of converting shortened URL back to a Dictionary key.
      */
-    private void initializeCharToIndexTable() {
+    public static HashMap<Character, Integer> initializeCharToIndexTable() {
         charToIndexTable = new HashMap<>();
         // 0->a, 1->b, ..., 25->z, ..., 52->0, 61->9
         for (int i = 0; i < 26; ++i) {
@@ -37,12 +37,13 @@ public class IDUtils {
             c += (i - 52);
             charToIndexTable.put(c, i);
         }
+        return charToIndexTable;
     }
     
     /**
      * Represents the conversion chart in the base10 to base62
      */
-    private void initializeIndexToCharTable() {
+    public static List<Character> initializeIndexToCharTable() {
         // 0->a, 1->b, ..., 25->z, ..., 52->0, 61->9
         indexToCharTable = new ArrayList<>();
         for (int i = 0; i < 26; ++i) {
@@ -60,6 +61,7 @@ public class IDUtils {
             c += (i - 52);
             indexToCharTable.add(c);
         }
+        return indexToCharTable;
     }
     
     /**
@@ -67,9 +69,12 @@ public class IDUtils {
      * @param id The url id which will be converted to base62.
      * @return The id in base62 format.
      */
-    public static String createUniqueID(Long id) {
-        List<Integer> base62ID = convertBase10ToBase62ID(id);
+    public static String generateUniqueID(Long id) {
+        List<Integer> base62ID = transformBase10ToBase62ID(id);
         StringBuilder uniqueURLID = new StringBuilder();
+        if(base62ID.size() ==0){
+            return indexToCharTable.get(0).toString();
+        }
         for (int digit : base62ID) {
             uniqueURLID.append(indexToCharTable.get(digit));
         }
@@ -81,7 +86,7 @@ public class IDUtils {
      * @param id The url id which will be converted to base62.
      * @return The id in base62 format.
      */
-    private static List<Integer> convertBase10ToBase62ID(Long id) {
+    private static List<Integer> transformBase10ToBase62ID(Long id) {
         List<Integer> digits = new LinkedList<>();
         while (id > 0) {
             int remainder = (int) (id % 62);
@@ -96,12 +101,12 @@ public class IDUtils {
      * @param uniqueID the input unique id to be processed.
      * @return the base62 id to base10 version.
      */
-    public static Long getDictionaryKeyFromUniqueID(String uniqueID) {
+    public static Long getKeyFromUniqueID(String uniqueID) {
         List<Character> base62IDs = new ArrayList<>();
         for (int i = 0; i < uniqueID.length(); ++i) {
             base62IDs.add(uniqueID.charAt(i));
         }
-        Long dictionaryKey = convertBase62ToBase10ID(base62IDs);
+        Long dictionaryKey = transformBase62ToBase10ID(base62IDs);
         return dictionaryKey;
     }
     
@@ -110,7 +115,7 @@ public class IDUtils {
      * @param ids
      * @return
      */
-    private static Long convertBase62ToBase10ID(List<Character> ids) {
+    private static Long transformBase62ToBase10ID(List<Character> ids) {
         long id = 0L;
         for (int i = 0, exp = ids.size() - 1; i < ids.size(); ++i, --exp) {
             int base10 = charToIndexTable.get(ids.get(i));
