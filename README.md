@@ -2,8 +2,7 @@
 
 ## A Dockerized Spring Boot Service using Redis as Storage.
 
-This app uses redis  due to the ability to be used as an in-memory data structure. Furthermore the Dictionary functionality we require can be obtained from Redis’ hset. This project is going to be moved to use a mongo Database, now is using redis but is too complex to use Object Oriented Design, besiedes that I have to design and build an app to monitorize the service. With the current design it is being guaranteed the scalability of the shorten App using a counter to define each new url and avoiding duplicates.
-
+This app uses redis  due to the ability to be used as an in-memory data structure. Furthermore the Dictionary functionality we require can be obtained from Redis’ hset. This project is going to be moved to use a mongo Database, now is using redis but is too complex to use Object Oriented Design, besiedes that I have to design and build an app to monitorize the service. With the current design it is being guaranteed the scalability of the shorten App using a counter to define each new url and avoiding duplicates. Finally it must be handle by the Elastic Benstalk technology.
 ### Utils
 
 #### IDUtils
