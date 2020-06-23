@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/rasilvap/shortenurl/workflows/Java CI with Maven/badge.svg)](https://github.com/rasilvap/shortenurl/Java CI with Maven)
+[![Actions Status](https://github.com/rasilvap/shortenurl/workflows/Java CI with Maven/badge.svg)](https://github.com/rasilvap/shortenurl/actions)
 
 # shortenurl
 
