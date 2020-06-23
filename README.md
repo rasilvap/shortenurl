@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/RobDWaller/csp-generator/workflows/Build%20and%20Test/badge.svg)](https://github.com/RobDWaller/csp-generator/actions)
+[![Actions Status](https://github.com/rasilvap/shortenurl/workflows/Build%20and%20Test/badge.svg)](https://github.com/rasilvap/shortenurl/actions)
 
 # shortenurl
 
