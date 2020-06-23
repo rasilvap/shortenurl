@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/rasilvap/shortenurl/workflows/Java CI with Maven/badge.svg)](https://github.com/rasilvap/shortenurl/Java CI with Maven)
+
 # shortenurl
 
 ## A Dockerized Spring Boot Service using Redis as Storage.
